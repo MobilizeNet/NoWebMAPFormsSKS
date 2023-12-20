@@ -1,0 +1,26 @@
+<kendo-window title="Please provide additional data" *ngIf="opened" (close)="close()" [minWidth]="250" [width]="450">
+  <form class="k-form">
+    <fieldset>
+      <legend>User Details</legend>
+
+      <label class="k-form-field">
+        <span>First Name</span>
+        <kendo-textbox [(value)]="name" placeholder="Your Name"></kendo-textbox>
+      </label>
+      <label class="k-form-field">
+        <span>Last Name</span>
+        <kendo-textbox [(value)]="lastName" placeholder="Your Last Name"></kendo-textbox>
+      </label>
+      <div>
+        <label>*User is <span *ngIf="!isDisplayedUserSelected()">not </span>selected</label>
+      </div>
+    </fieldset>
+
+    <div class="k-actions k-actions-end">
+      <button kendoButton type="button" [routerLink]="['/']" (click)="close()">Cancel</button>
+      <button kendoButton themeColor="primary" type="button" [routerLink]="['/']" (click)="submit()">
+        Submit
+      </button>
+    </div>
+  </form>
+</kendo-window>

@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <StartupObject>WebSite.Startup</StartupObject>
+        <AssemblyName>SKS</AssemblyName>
+        <ProjectGuid>12ffce2c-cc44-46e8-b3ad-57e1b3406b62</ProjectGuid>
+        <Deterministic>False</Deterministic>
+        <LangVersion>7.3</LangVersion>
+         </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="Stubs\Stubs.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.3" />
+        <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+        <PackageReference Include="Microsoft.VisualBasic" Version="10.4.0-preview.18571.3" />
+        <PackageReference Include="Mobilize.Extensions.Logging.RollingFile" Version="2.1.1-rc0027" />
+        <PackageReference Include="Mobilize.Weaving.WebMapExtensions.All" Version="8.1.2" PrivateAssets="all" />
+        <PackageReference Include="Mobilize.Weaving" Version="2.4.0" PrivateAssets="all" />
+        <PackageReference Include="Mobilize.WebMap.CoreServices.All" Version="8.2.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="Views\**\*.cshtml" />
+        <Content Include="Views\**\*.config" />
+        <Compile Remove="sks-angular\**" />
+        <Content Remove="sks-angular\**" />
+        <EmbeddedResource Remove="sks-angular\**" />
+        <None Remove="sks-angular\**" />
+		        <Compile Remove="Stubs\**" />
+		<Content Remove="Stubs\**" />
+		<EmbeddedResource Remove="Stubs\**" />
+		<None Remove="Stubs\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="mscorlib" />
+      <Reference Include="System.Core" />
+      <Reference Include="System.Data" />
+      <Reference Include="System" />
+      <Reference Include="System.Xml" />
+    </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+      <TypeScriptTarget>ES5</TypeScriptTarget>
+      <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+      <TypeScriptModuleKind>None</TypeScriptModuleKind>
+      <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+      <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+      <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+      <TypeScriptOutFile />
+      <TypeScriptOutDir />
+      <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+      <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+      <TypeScriptSourceMap>True</TypeScriptSourceMap>
+      <TypeScriptMapRoot />
+      <TypeScriptSourceRoot />
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+</Project>
+
