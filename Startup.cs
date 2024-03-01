@@ -20,7 +20,9 @@ namespace WebSite
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Server.Kestrel.Core;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using Mobilize.Web;
     using Mobilize.WebMap.Common.Core;
     using Mobilize.WebMap.Common.DCP;
@@ -55,8 +57,18 @@ namespace WebSite
             {
                 options.ModelBinderProviders.Insert(0, new ObservableModelBinderProvider());
                 options.ModelMetadataDetailsProviders.Insert(0, new SuppressChildValidationMetadataProvider(typeof(IObservable)));
-            }).AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
-;
+            }).AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            // If using IIS:
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+            // If using Kestrel:
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+            services.AddHealthChecks();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSignalR();
             // Sorting commands service.
@@ -68,26 +80,25 @@ namespace WebSite
         /// </summary>
         /// <param name="app">the application builder</param>
         /// <param name="env">the hosting environment</param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSession();
             app.UseAntiforgeryToken();
             app.UseWebMap();
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute("DefaultApi", "api/{controller}/{id}");
+                endpoints.MapControllerRoute("DefaultApi", "api/{controller}/{id}");
+                endpoints.MapHealthChecks("/health");
+                endpoints.MapHub<SignalHub>("/bgw");
             });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<SignalHub>("/bgw");
-            });
         }
 
         private static void AddDesktopCompatibilityPlatform(IServiceCollection services, EntryPoint entryPoint)

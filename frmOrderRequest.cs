@@ -6,8 +6,6 @@ using UpgradeHelpers.Helpers;
 using Mobilize.WebMap.Common.Attributes;
 using Mobilize.Web.Extensions;
 using Mobilize.Web;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace SKS
 {
@@ -176,6 +174,11 @@ namespace SKS
          }
       }
 
+      private void cmdClose_Click(Object eventSender, EventArgs eventArgs)
+      {
+         this.Close();
+      }
+
         private void ReloadListViewData(object sender, RefreshClientCustomChangesEventArgs eventArgs)
         {
             this.DoSearchCustomer();
@@ -210,12 +213,7 @@ namespace SKS
             }
         }
 
-      private void cmdClose_Click(Object eventSender, EventArgs eventArgs)
-      {
-         this.Close();
-      }
-
-      private void cmdCustomers_Click(Object eventSender, EventArgs eventArgs)
+        private void cmdCustomers_Click(Object eventSender, EventArgs eventArgs)
       {
          //On Error Resume Next
          frmCustomers.DefInstance.ShowDialog();

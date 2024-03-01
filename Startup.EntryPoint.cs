@@ -47,16 +47,19 @@ namespace WebSite
                 .AddJsonFile("appsettings.json", optional: true)
                 .Build();
 
-            return new WebHostBuilder()
-                .UseContentRoot(System.IO.Directory.GetCurrentDirectory())
-                .UseKestrel()
+            return WebHost.CreateDefaultBuilder(args)
+                //// logging
+                //.ConfigureLogging(builder => builder.AddFile(options =>
+                //{
+                //    options.FileName = "log-";
+                //    options.LogDirectory = "LogFiles";
+                //    options.FileSizeLimit = 20 * 1024 * 1024;
+                //}))
+                //// IIS Deployment
+                //.UseUrls("http://localhost:81")
                 //.UseIISIntegration()
                 .UseConfiguration(config)
                 .UseStartup<Startup>()
-                .ConfigureKestrel((context, options) =>
-                {
-                    // Set properties and call methods on options
-                })
                 .Build();
         }
     }
